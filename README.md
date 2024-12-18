@@ -58,8 +58,10 @@ The target variable is:
 ### Visualization:
 The scatter plot below compares the predicted wave heights to the actual values. The first graph is the result of the AutoML and the second is from the XGBoost with hyperparameter tuning. The red dashed line represents the perfect prediction line:
 
-<img src="scatter.png" alt="Scatter Plot: Predicted vs Actual" width="400px" />
-<img src="XGB.png" alt="Scatter Plot: Predicted vs Actual" width="400px" />
+<div style="display: flex; justify-content: center; gap: 20px;">
+    <img src="scatter.png" alt="Scatter Plot: AutoML" width="400px" />
+    <img src="XGB.png" alt="Scatter Plot: Manual Model" width="400px" />
+</div>
 
 ---
 
@@ -78,7 +80,7 @@ The scatter plot below compares the predicted wave heights to the actual values.
 
 ## 📝 Files
 ```
-|-- G13.ipynb               # Jupyter Notebook with the entire pipeline
+|-- script.ipynb            # Jupyter Notebook with the entire pipeline
 |-- scatter.png             # Visualization of predictions
 |-- XGB.png                 # Visualization of predictions
 |-- README.md               # Project documentation
