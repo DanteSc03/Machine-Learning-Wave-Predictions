@@ -1,98 +1,121 @@
-# AutoML Regression: Predicting Wave Heights 🌊
+# AutoML Regression: Predicting Significant Wave Heights 🌊
 
-## 🚀 Overview
-This project demonstrates how to use **BigQuery AutoML** to build and evaluate a regression model that predicts **significant wave height** based on oceanographic data. The pipeline includes training, evaluating, and visualizing model predictions, culminating in a scatter plot comparing actual and predicted values.
-
----
-
-## 📋 Features
-- **BigQuery AutoML Integration**: Leverages Google Cloud's AutoML capabilities for automated model building.
-- **Model Evaluation**: Uses key metrics such as RMSE, R² score, and Mean Absolute Error (MAE) to assess performance.
-- **Prediction Visualization**: Generates a scatter plot for a clear visual comparison of actual vs predicted wave heights.
-- **Jupyter Notebook**: End-to-end workflow is implemented using a notebook, ensuring reproducibility and clarity.
+## 📌 Project Objective
+The purpose of this project is to use **BigQuery AutoML** to build a regression model that predicts **significant wave height** based on oceanographic data. This project includes steps for:
+- Data ingestion and preparation
+- Model training and evaluation
+- Visualizing predictions against actual values
+- Comparing results with manually created machine learning models
 
 ---
 
-## 🛠️ Tools and Libraries
-- **Google BigQuery**: Data querying and AutoML model training.
-- **Python**: Data processing and visualization.
-- **Pandas**: For handling tabular data.
-- **Matplotlib**: Creating the "Predicted vs Actual" scatter plot.
+## 📊 Dataset Description
+The dataset contains oceanographic measurements and wave data. The key features include:
+- **Date and Time**: Timestamp of the measurement.
+- **Average Current Speed (mps)**: Speed of ocean currents.
+- **Current Direction**: Direction of the current flow.
+- **Water Temperature (°C)**: Sea water temperature.
+- **Salinity**: Salt concentration in water.
+- **Mean and Peak Wave Period (s)**: Time between successive waves.
+- **Wave Direction and Wind Speed**: Attributes related to wind and wave.
+
+The target variable is:
+- **Significant Wave Height (m)**: Height of the waves to be predicted.
 
 ---
 
-## 📊 Data Description
-The dataset includes oceanographic features such as:
-- **Significant wave height** (target variable)
-- **Current speed and direction**
-- **Water temperature**
-- **Wind speed and wave direction**
-
-Predictions are made on test data to evaluate model performance.
+## ⚙️ Tools and Technologies
+- **Google Cloud BigQuery**: To train and evaluate the AutoML regression model.
+- **Python**: For querying and analyzing predictions.
+- **Pandas**: Data manipulation and handling.
+- **Matplotlib**: For creating visualizations.
 
 ---
 
-## 🔧 How to Run
-1. **Set up Google Cloud Project**:
-   - Enable **BigQuery API**.
-   - Upload the training and testing data to BigQuery tables.
-
-2. **Authentication**:
-   Ensure you have set up your Google Cloud service account credentials:
-   ```bash
-   export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/service-account.json"
-   ```
-
-3. **Run the Script**:
-   Execute the Jupyter Notebook `G13.ipynb`. Key sections include:
-   - Model creation using `ML.PREDICT` and `ML.EVALUATE`.
-   - Saving predictions to a Pandas DataFrame.
-   - Generating the scatter plot of actual vs predicted values.
-
-4. **Install Required Libraries**:
-   ```bash
-   pip install google-cloud-bigquery pandas matplotlib
-   ```
+## 🛠️ Workflow
+1. **Data Upload**: The training and test datasets are uploaded to **BigQuery**.
+2. **Model Training**: The AutoML model is created using the `ML.CREATE_MODEL` function in BigQuery.
+3. **Model Evaluation**: 
+   - Metrics such as **Mean Absolute Error (MAE)**, **Mean Squared Error (MSE)**, and **R² score** are calculated using `ML.EVALUATE`.
+4. **Model Prediction**:
+   - Predictions are generated on the test dataset using `ML.PREDICT`.
+5. **Visualization**:
+   - A scatter plot of **Predicted vs Actual** values is created to assess the model's performance.
+6. **Manual Model Comparison**:
+   - Predictions from manually created machine learning models (e.g., Linear Regression) were compared with AutoML results.
+   - The manually created models provided better R² scores, demonstrating that manual tuning and feature engineering can outperform AutoML in this case.
 
 ---
 
 ## 📈 Results
-- **Model Performance Metrics**:
-  - Mean Absolute Error (MAE): `0.753781`
-  - Mean Squared Error (MSE): `0.798625`
-  - R² Score: `0.196255` (indicating underfitting)
+### Model Evaluation Metrics:
+| Metric                        | AutoML Value | Manual ML Value |
+|-------------------------------|--------------|----------------|
+| **Mean Absolute Error (MAE)** | 0.753781     | 0.650120       |
+| **Mean Squared Error (MSE)**  | 0.798625     | 0.710520       |
+| **R² Score**                  | 0.196255     | 0.450300       |
 
-- **Visualization**:
-  The scatter plot below shows predicted values against actual values, highlighting the underfitting issue:
-  ![Predicted vs Actual](scatter_plot.png)
+### Visualization:
+The scatter plot below compares the predicted wave heights to the actual values. The first graph is the result of the AutoML and the second is from the XGBoost with hyperparameter tuning. The red dashed line represents the perfect prediction line:
 
----
-
-## 📝 Improvements
-To address underfitting:
-1. Incorporate additional features for better modeling.
-2. Increase training time and data.
-3. Explore more complex algorithms outside AutoML.
+![Scatter Plot: Predicted vs Actual](scatter.png)
+![Scatter Plot: Predicted vs Actual](XGB.png)
 
 ---
 
-## 📂 File Structure
+## 🔍 Observations
+- The AutoML model shows signs of **underfitting**, particularly for higher actual wave heights.
+- Manual machine learning models performed better, achieving a higher R² score and better alignment with the actual values.
+- This highlights the importance of **manual feature engineering** and **model tuning** when AutoML does not fully capture the complexity of the data.
+
+### Recommendations for Improvement:
+1. Incorporate additional relevant features into the dataset.
+2. Increase the training budget or explore alternative modeling approaches.
+3. Perform manual tuning of hyperparameters to optimize performance.
+4. Continue improving feature selection and engineering for both manual and AutoML models.
+
+---
+
+## 📝 Files
 ```
-|-- G13.ipynb               # Jupyter Notebook with full pipeline
-|-- scatter_plot.png        # Visualization of predictions
+|-- G13.ipynb               # Jupyter Notebook with the entire pipeline
+|-- scatter.png             # Visualization of predictions
+|-- XGB.png                 # Visualization of predictions
 |-- README.md               # Project documentation
 ```
 
 ---
 
-## 🎉 Acknowledgments
-- **Google Cloud Platform** for AutoML capabilities.
-- **Matplotlib** for visualization.
-- Oceanographic data sources for providing real-world datasets.
+## 🚀 How to Run
+1. **Set up Google Cloud Project**:
+   - Enable **BigQuery API**.
+   - Upload the dataset to BigQuery tables.
+
+2. **Run the Jupyter Notebook**:
+   - Install required libraries:
+     ```bash
+     pip install google-cloud-bigquery pandas matplotlib
+     ```
+   - Authenticate with Google Cloud credentials:
+     ```bash
+     export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/service-account.json"
+     ```
+   - Run the notebook to train, evaluate, and visualize the predictions.
+
+3. **View Results**:
+   - Check the evaluation metrics.
+   - Compare AutoML results with manually created ML models.
+   - Analyze the scatter plot to assess model predictions.
 
 ---
 
-## 🤝 Connect
-Find me on GitHub: [DanteSc03](https://github.com/DanteSc03)
+## 🤝 Acknowledgments
+- **Google Cloud Platform** for AutoML features.
+- **Matplotlib** and **Pandas** for data visualization and handling.
+- Real-world oceanographic data sources for the dataset.
+- Manual machine learning modeling techniques for comparison.
 
-Feel free to contribute or share feedback! 🌟
+---
+
+## 🌟 Author
+Developed by [DanteSc03](https://github.com/DanteSc03). Feel free to contribute or share feedback! 🚀
