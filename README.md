@@ -51,15 +51,15 @@ The target variable is:
 ### Model Evaluation Metrics:
 | Metric                        | AutoML Value | Manual ML Value |
 |-------------------------------|--------------|----------------|
-| **Mean Absolute Error (MAE)** | 0.753781     | 0.650120       |
-| **Mean Squared Error (MSE)**  | 0.798625     | 0.710520       |
-| **R² Score**                  | 0.196255     | 0.450300       |
+| **Mean Absolute Error (MAE)** | 0.753781     | 0.189700       |
+| **Mean Squared Error (MSE)**  | 0.798625     | 0.275200       |
+| **R² Score**                  | 0.196255     | 0.952800       |
 
 ### Visualization:
 The scatter plot below compares the predicted wave heights to the actual values. The first graph is the result of the AutoML and the second is from the XGBoost with hyperparameter tuning. The red dashed line represents the perfect prediction line:
 
-![Scatter Plot: Predicted vs Actual](scatter.png)
-![Scatter Plot: Predicted vs Actual](XGB.png)
+<img src="scatter.png" alt="Scatter Plot: Predicted vs Actual" width="400px" />
+<img src="XGB.png" alt="Scatter Plot: Predicted vs Actual" width="400px" />
 
 ---
 
